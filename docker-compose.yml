@@ -1,0 +1,24 @@
+services:
+  jenkins-blueocean:
+    image: myjenkins-blueocean:2.462.2-1
+    container_name: jenkins
+    restart: on-failure
+    networks:
+      - jenkins-network
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - /home/ubuntu/services/certs:/certs/client:ro
+
+networks:
+  jenkins-network:
+
+volumes:
+  jenkins-data:
+  jenkins-docker-certs:
